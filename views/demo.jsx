@@ -1,5 +1,6 @@
 /* eslint camelcase: off */
 import React, { Component } from 'react';
+import sSanitizer from 'string-sanitizer'
 import PropType from 'prop-types';
 import { Icon, Tabs, Pane } from 'watson-react-components';
 import 'whatwg-fetch';
@@ -60,6 +61,7 @@ export default class Demo extends Component {
     };
 
     this.audioElementRef = React.createRef();
+    this.audio2ElementRef = React.createRef();
 
     this.onTabChange = this.onTabChange.bind(this);
     this.onTextChange = this.onTextChange.bind(this);
@@ -122,8 +124,18 @@ export default class Demo extends Component {
     const params = this.setupParamsFromState(true);
 
     const audio = this.audioElementRef.current;
+    const audio2 = this.audio2ElementRef.current;
+
     audio.setAttribute('type', 'audio/ogg;codecs=opus');
-    audio.setAttribute('src', `/api/v3/synthesize?${params.toString()}`);
+    const text = params.get('text')
+    if (text.length > 1500) {
+      params.set('text', text.slice(0, 1500))
+      audio.setAttribute('src', `/api/v3/synthesize?${params.toString()}`)
+      params.set('text', text.slice(1500, 3000))
+      audio2.setAttribute('src', `/api/v3/synthesize?${params.toString()}`)
+    } else {
+      audio.setAttribute('src', `/api/v3/synthesize?${params.toString()}`)
+    }
 
     this.setState({ loading: true, hasAudio: false });
   }
@@ -135,6 +147,7 @@ export default class Demo extends Component {
     this.setState({
       error: null,
       hasAudio: false,
+      hasAudio2: false,
       text: voice.demo.text,
       ssml: voice.demo.ssml,
       ssml_voice: voice.demo.ssml_voice,
@@ -161,7 +174,9 @@ export default class Demo extends Component {
 
     const params = getSearchParams();
     if (this.state && current_tab === 0) {
-      params.set('text', text);
+      var sanText = sSanitizer.sanitize.keepSpace(text)
+      params.set('text', sanText.slice(0, 1500));
+      // params.set('allText', sanText)
       params.set('voice', voice.name);
     } else if (this.state && current_tab === 1) {
       params.set('text', ssml);
@@ -272,6 +287,10 @@ export default class Demo extends Component {
               <Icon type="loader" />
             </div>
             <audio ref={this.audioElementRef} autoPlay id="audio" className={`audio ${hasAudio ? '' : 'hidden'}`} controls="controls">
+              Your browser does not support the audio element.
+            </audio>
+
+            <audio ref={this.audio2ElementRef} autoPlay id="audio" className={`audio ${hasAudio ? '' : 'hidden'}`} controls="controls">
               Your browser does not support the audio element.
             </audio>
           </div>

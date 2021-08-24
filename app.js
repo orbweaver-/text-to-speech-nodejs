@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
  */
 app.get('/api/v3/synthesize', async (req, res, next) => {
   try {
-    req.query.text = sSanitizer.sanitize.keepSpace(req.query.text.slice(0, 1800))
+    //req.query.text = sSanitizer.sanitize.keepSpace(req.query.text.slice(0, 1800))
     const { result } = await textToSpeech.synthesize(req.query);
     const transcript = result;
     transcript.on('response', (response) => {
