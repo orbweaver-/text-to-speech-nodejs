@@ -29,31 +29,6 @@ function Layout(props) {
         <link rel="stylesheet" href="/css/style.css" />
       </head>
       <body>
-        <Header
-          mainBreadcrumbs="Text to Speech"
-          mainBreadcrumbsUrl="https://www.ibm.com/watson/services/text-to-speech/"
-          subBreadcrumbs="Text to Speech Demo"
-          subBreadcrumbsUrl="https://text-to-speech-demo.mybluemix.net"
-        />
-        <Jumbotron
-          serviceName="Text to Speech"
-          repository="https://github.com/watson-developer-cloud/text-to-speech-nodejs"
-          documentation="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-gettingStarted"
-          apiReference="https://cloud.ibm.com/apidocs/text-to-speech"
-          startInBluemix="https://cloud.ibm.com/registration/?target=%2Fcatalog%2Fservices%2Fnatural-language-understanding%3FhideTours%3Dtrue%26cm_mmc%3D-_-Watson%2BCore_Watson%2BCore%2B-%2BPlatform-_-WW_WW-_-wdc-ref%26cm_mmc%3D-_-Watson%2BCore_Watson%2BCore%2B-%2BPlatform-_-WW_WW-_-wdc-ref%26cm_mmca1%3D000000OF%26cm_mmca2%3D10000409"
-          version="GA"
-          serviceIcon="/images/service-icon.svg"
-          description={DESCRIPTION}
-        />
-        <div className="_container _container_large gdpr-info">
-          {GDPR_INFO}
-        </div>
-        <div className="_container _container_large gdpr-info">
-          By using this application, you agree to the &nbsp;
-          <a target="_blank" rel="noreferrer noopener" href={TERMS_OF_USE_URL}>
-                Terms of Use
-          </a>
-        </div>
         <div id="root">
           {children}
         </div>

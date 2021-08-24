@@ -219,22 +219,6 @@ export default class Demo extends Component {
     return (
       <section className="_container _container_large">
         <div className="row">
-          <h2 className="base--h2 title">
-            Input Text
-          </h2>
-          <p className="base--p normalfont">
-            {TEXT_DESCRIPTION}
-          </p>
-          <h2 className="base--h2 title">
-            Voice Selection
-          </h2>
-		      <p className="base--p normalfont">
-            For optimal naturalness, select neural voices (V3, enhanced dnn) in the list below.<br/>Please see&nbsp;
-            <a target="_blank" rel="noreferrer noopener" href={VOICE_INFORMATION_URL}>
-              Watson TTS blog
-            </a>
-            &nbsp;for more information.
-          </p>
           <div className="voice-input">
             <select
               name="voice"
@@ -250,17 +234,6 @@ export default class Demo extends Component {
             </select>
           </div>
 
-          <Tabs selected={0} onChange={this.onTabChange}>
-            <Pane label="Text">
-              <textarea onChange={this.onTextChange} className="base--textarea textarea" dir={textDirection} spellCheck="false" value={text || ''} />
-            </Pane>
-            <Pane label={ssmlLabel}>
-              <textarea onChange={this.onSsmlChange} className="base--textarea textarea" dir={textDirection} spellCheck="false" value={ssml || ''} />
-            </Pane>
-            <Pane label="Voice Transformation SSML">
-              <textarea readOnly={!ssml_voice} onChange={this.onVoiceSsmlChange} dir={textDirection} className="base--textarea textarea" spellCheck="false" value={ssml_voice || 'Voice Transformation not currently supported for this voice.'} />
-            </Pane>
-          </Tabs>
           <div className="output-container">
             <div className="controls-container">
               <div className="buttons-container">
@@ -303,6 +276,9 @@ export default class Demo extends Component {
             </audio>
           </div>
         </div>
+
+        <textarea onChange={this.onTextChange} className="base--textarea textarea" dir={textDirection} spellCheck="false" value={text || ''} />
+
       </section>
     );
   }
