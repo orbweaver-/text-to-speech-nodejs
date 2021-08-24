@@ -62,6 +62,7 @@ export default class Demo extends Component {
 
     this.audioElementRef = React.createRef();
     this.audio2ElementRef = React.createRef();
+    this.audio3ElementRef = React.createRef();
 
     this.onTabChange = this.onTabChange.bind(this);
     this.onTextChange = this.onTextChange.bind(this);
@@ -88,6 +89,10 @@ export default class Demo extends Component {
       this.audio2ElementRef.current.addEventListener('play', this.onAudioLoaded);
       this.audio2ElementRef.current.addEventListener('error', this.handleAudioError);
     }
+    if (this.audio3ElementRef.current) {
+      this.audio3ElementRef.current.addEventListener('play', this.onAudioLoaded);
+      this.audio3ElementRef.current.addEventListener('error', this.handleAudioError);
+    }
   }
 
   componentWillUnmount() {
@@ -98,6 +103,10 @@ export default class Demo extends Component {
     if (this.audio2ElementRef.current) {
       this.audio2ElementRef.current.removeEventListener('play', this.onAudioLoaded);
       this.audio2ElementRef.current.removeEventListener('error', this.handleAudioError);
+    }
+    if (this.audio3ElementRef.current) {
+      this.audio3ElementRef.current.removeEventListener('play', this.onAudioLoaded);
+      this.audio3ElementRef.current.removeEventListener('error', this.handleAudioError);
     }
   }
 
@@ -133,6 +142,7 @@ export default class Demo extends Component {
 
     const audio = this.audioElementRef.current;
     const audio2 = this.audio2ElementRef.current;
+    const audio3 = this.audio3ElementRef.current
 
     audio.setAttribute('type', 'audio/ogg;codecs=opus');
     const text = params.get('text')
@@ -141,6 +151,10 @@ export default class Demo extends Component {
       audio.setAttribute('src', `/api/v3/synthesize?${params.toString()}`)
       params.set('text', text.slice(1500, 3000))
       audio2.setAttribute('src', `/api/v3/synthesize?${params.toString()}`)
+      if (text.length > 3000) {
+        params.set('text', text.slice(3000, 4500))
+        audio3.setAttribute('src', `/api/v3/synthesize?${params.toString()}`)
+      }
     } else {
       audio.setAttribute('src', `/api/v3/synthesize?${params.toString()}`)
     }
@@ -298,7 +312,11 @@ export default class Demo extends Component {
               Your browser does not support the audio element.
             </audio>
 
-            <audio ref={this.audio2ElementRef} autoPlay id="audio" className={`audio ${hasAudio ? '' : 'hidden'}`} controls="controls">
+            <audio ref={this.audio2ElementRef} id="audio" className={`audio ${hasAudio ? '' : 'hidden'}`} controls="controls">
+              Your browser does not support the audio element.
+            </audio>
+
+            <audio ref={this.audio3ElementRef} id="audio" className={`audio ${hasAudio ? '' : 'hidden'}`} controls="controls">
               Your browser does not support the audio element.
             </audio>
           </div>
