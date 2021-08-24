@@ -84,12 +84,20 @@ export default class Demo extends Component {
       this.audioElementRef.current.addEventListener('play', this.onAudioLoaded);
       this.audioElementRef.current.addEventListener('error', this.handleAudioError);
     }
+    if (this.audio2ElementRef.current) {
+      this.audio2ElementRef.current.addEventListener('play', this.onAudioLoaded);
+      this.audio2ElementRef.current.addEventListener('error', this.handleAudioError);
+    }
   }
 
   componentWillUnmount() {
     if (this.audioElementRef.current) {
       this.audioElementRef.current.removeEventListener('play', this.onAudioLoaded);
       this.audioElementRef.current.removeEventListener('error', this.handleAudioError);
+    }
+    if (this.audio2ElementRef.current) {
+      this.audio2ElementRef.current.removeEventListener('play', this.onAudioLoaded);
+      this.audio2ElementRef.current.removeEventListener('error', this.handleAudioError);
     }
   }
 
@@ -175,7 +183,7 @@ export default class Demo extends Component {
     const params = getSearchParams();
     if (this.state && current_tab === 0) {
       var sanText = sSanitizer.sanitize.keepSpace(text)
-      params.set('text', sanText.slice(0, 1500));
+      params.set('text', sanText);
       // params.set('allText', sanText)
       params.set('voice', voice.name);
     } else if (this.state && current_tab === 1) {
